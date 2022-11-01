@@ -19,6 +19,10 @@
   	<servlet-name>MyServlet</servlet-name>
   	<servlet-class>sec00.ex01.MyServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>SecondServlet</servlet-name>
+  	<servlet-class>sec01.ex01.SecondServlet</servlet-class>
+  </servlet>
   
   <!-- 서블릿 매핑 -->
   <servlet-mapping>
@@ -28,6 +32,10 @@
   <servlet-mapping>
   <servlet-name>MyServlet</servlet-name>
   <url-pattern>/myServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  <servlet-name>SecondServlet</servlet-name>
+  <url-pattern>/secondServlet</url-pattern>
   </servlet-mapping>
   
 </web-app>
