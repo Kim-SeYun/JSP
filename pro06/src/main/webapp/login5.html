@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form name="frmLogin">
+    아이디 : <input type="text" name="user_id"><br>
+    비밀번호 : <input type="text" name="user_pw"><br>
+    <input type="hidden" name="user_addr" value="대구광역시">
+    <button type="button" onclick="fn_validate()">전송</button>
+</form>  
+</body>
+<script>
+function fn_validate(){
+    var frmLogin = document.frmLogin;
+    var id = frmLogin.user_id.value.trim(); // trim() 문자열의 앞뒤 공백 제거
+    var pw = frmLogin.user_pw.value.trim();
+    if(id == '' || pw==''){
+        alert('아이디 또는 비밀번호를 입력하세요');
+        return;
+    }
+    frmLogin.action = '/pro06/login5'; // 홈태그의 action속성값 설정
+    frmLogin.method = 'post';
+    frmLogin.submit(); // 홈태그에서 action 속성 실행
+    
+}
+</script>
+</html>
