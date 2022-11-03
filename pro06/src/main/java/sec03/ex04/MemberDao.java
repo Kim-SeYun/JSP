@@ -18,13 +18,13 @@ public class MemberDao {
 		return dao;
 	}
 	
-	public String login(String id, String pw) {
+	public boolean login(String id, String pw) {
 		String value = members.get(id);
 		if(pw.equals(value)) {
 			System.out.println("로그인 성공");
-			return id;
+			return true;
 		}
-		return "fail";
+		return false;
 	}
 
 }

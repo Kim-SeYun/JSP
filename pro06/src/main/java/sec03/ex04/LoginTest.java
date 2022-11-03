@@ -1,6 +1,8 @@
 package sec03.ex04;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,10 +29,19 @@ public class LoginTest extends HttpServlet {
 	}
 
 	private void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
 		String id = request.getParameter("user_id");
 		String pw = request.getParameter("user_pw");
-		String result = dao.login(id, pw);
-		System.out.println("결과 : " + result);
+		boolean result = dao.login(id, pw);
 		
+		if(result) {
+			out.print("<div>"+id+"님이 로그인 함</div>");
+		}else {
+			out.print("로그인 실패<br>");
+			out.print("<a href='/pro06/loginTest.html'>로그인페이지로</a>");
+		}
 	}
 }
