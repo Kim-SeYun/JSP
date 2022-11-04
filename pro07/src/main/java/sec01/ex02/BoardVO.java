@@ -3,66 +3,72 @@ package sec01.ex02;
 import java.sql.Date;
 
 public class BoardVO {
-	private int BNO;
-	private String TITLE;
-	private String CONTENT;
-	private String WRITER;
-	private Date REGDATE;
-	private Date UPDATEDATE;
+	private int bno;
+	private String title;
+	private String content;
+	private String writer;
+	private Date regdate;
+	private Date updatedate;
 	
-	public BoardVO(int bNO, String tITLE, String cONTENT, String wRITER, Date rEGDATE, Date uPDATEDATE) {
-		BNO = bNO;
-		TITLE = tITLE;
-		CONTENT = cONTENT;
-		WRITER = wRITER;
-		REGDATE = rEGDATE;
-		UPDATEDATE = uPDATEDATE;
+	public BoardVO(int bno, String title, String content, String writer, Date regdate, Date updatedate) {
+		this.bno = bno;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.regdate = regdate;
+		this.updatedate = updatedate;
 	}
-	public int getBNO() {
-		return BNO;
+	
+	
+	public BoardVO(int bno, String title, String content, String writer) {
+		this.bno = bno;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
 	}
-	public void setBNO(int bNO) {
-		BNO = bNO;
+
+	public int getBno() {
+		return bno;
 	}
-	public String getTITLE() {
-		return TITLE;
+	public void setBno(int bno) {
+		this.bno = bno;
 	}
-	public void setTITLE(String tITLE) {
-		TITLE = tITLE;
+	public String getTitle() {
+		return title;
 	}
-	public String getCONTENT() {
-		return CONTENT;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public void setCONTENT(String cONTENT) {
-		CONTENT = cONTENT;
+	public String getContent() {
+		return content;
 	}
-	public String getWRITER() {
-		return WRITER;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public void setWRITER(String wRITER) {
-		WRITER = wRITER;
+	public String getWriter() {
+		return writer;
 	}
-	public Date getREGDATE() {
-		return REGDATE;
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
-	public void setREGDATE(Date rEGDATE) {
-		REGDATE = rEGDATE;
+	public Date getRegdate() {
+		return regdate;
 	}
-	public Date getUPDATEDATE() {
-		return UPDATEDATE;
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
-	public void setUPDATEDATE(Date uPDATEDATE) {
-		UPDATEDATE = uPDATEDATE;
+	public Date getUpdatedate() {
+		return updatedate;
 	}
+	public void setUpdatedate(Date updatedate) {
+		this.updatedate = updatedate;
+	}
+
 	@Override
 	public String toString() {
-		return "BoardVO [BNO=" + BNO + ", TITLE=" + TITLE + ", CONTENT=" + CONTENT + ", WRITER=" + WRITER + ", REGDATE="
-				+ REGDATE + ", UPDATEDATE=" + UPDATEDATE + "]";
+		return "BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
+				+ regdate + ", updatedate=" + updatedate + "]";
 	}
-	
-	
-	
-	
 	
 
 }
