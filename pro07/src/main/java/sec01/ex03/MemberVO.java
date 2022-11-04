@@ -1,4 +1,4 @@
-package sec01.ex01;
+package sec01.ex03;
 
 import java.sql.Date;
 
@@ -15,6 +15,13 @@ public class MemberVO {
 		this.uName = uName;
 		this.email = email;
 		this.date = date;
+	}
+	public MemberVO(String uId, String pwd, String uName, String email) {
+		this.uId = uId;
+		this.pwd = pwd;
+		this.uName = uName;
+		this.email = email;
+		
 	}
 	
 	public String getuId() {

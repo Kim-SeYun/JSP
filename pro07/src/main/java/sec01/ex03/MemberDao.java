@@ -1,4 +1,4 @@
-package sec01.ex01;
+package sec01.ex03;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -41,6 +41,27 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	// 회원가입
+	public void addMember(MemberVO vo) {
+		connDB();
+		String id = vo.getuId();
+		String pwd = vo.getPwd();
+		String name = vo.getuName();
+		String email = vo.getEmail();
+		String query = "insert into t_member(u_id,pwd,u_name,email) values(?,?,?,?)";
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			pstmt.setString(3, name);
+			pstmt.setString(4, email);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void connDB() {
