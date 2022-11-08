@@ -36,11 +36,18 @@ public class MemberServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		RequestDispatcher rd = request.getRequestDispatcher("/memberList.jsp");
+		String command = request.getParameter("command");
 		
-		List<MemberVO> memberList = dao.memberList();
-		request.setAttribute("list", memberList);
-		rd.forward(request, response);
+		if(command != null && command.equals("addMember")) { // 회원가입
+			System.out.println("회원가입");
+		}
+		
+		else { // 회원목록
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/memberList.jsp");
+			List<MemberVO> memberList = dao.memberList();
+			request.setAttribute("list", memberList);
+			rd.forward(request, response);
+		}
 	}
-
 }
