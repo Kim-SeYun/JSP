@@ -14,16 +14,17 @@ import javax.sql.DataSource;
 
 public class MemberDaoImpl implements MemberDao {
 	
-	private DataSource datasource;
+	private DataSource dataSource;
 	
 	public MemberDaoImpl() {
 		try {
 			Context ctx = new InitialContext();
 			Context env = (Context) ctx.lookup("java:/comp/env");
-			datasource = (DataSource) env.lookup("jdbc/oracle");
+			dataSource = (DataSource) env.lookup("jdbc/oracle");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
@@ -33,15 +34,15 @@ public class MemberDaoImpl implements MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			conn = datasource.getConnection();
-			pstmt = conn.prepareStatement("select * from t_member");
+			conn = dataSource.getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM T_MEMBER");
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				MemberVO vo = new MemberVO(
-						rs.getInt("mno"), 
-						rs.getString("id"), 
-						rs.getString("name"), 
-						rs.getString("pwd"), 
+						rs.getInt("mno"),
+						rs.getString("id"),
+						rs.getString("pwd"),
+						rs.getString("name"),
 						rs.getString("email")
 				);
 				vo.setJoinDate(rs.getDate("joinDate"));
@@ -49,7 +50,32 @@ public class MemberDaoImpl implements MemberDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if(conn!=null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		} // finally end
 				
 		return list;
 	}
@@ -58,21 +84,69 @@ public class MemberDaoImpl implements MemberDao {
 	public void addMember(MemberVO vo) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String query = "insert into t_member(mno,id,pwd,name, email) ";
-		query += "values(mno_seq.nextval,?,?,?,?)";
+		String query = "INSERT INTO T_MEMBER(MNO,ID,PWD,NAME,EMAIL) ";
+		query += "VALUES(MNO_SEQ.NEXTVAL,?,?,?,?)";
 				
 		try {
-			conn = datasource.getConnection();
+			conn = dataSource.getConnection();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, vo.getId());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getName());
 			pstmt.setString(4, vo.getEmail());
 			pstmt.executeUpdate();
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if(conn!=null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		} // finally end
+	}
+
+	@Override
+	public void delMember(int mno) {
+		Connection conn =null;
+		PreparedStatement pstmt = null;
+		String query = "delete from t_member where mno=?";
+		try {
+			conn = dataSource.getConnection();
+			pstmt =conn.prepareStatement(query);
+			pstmt.setInt(1, mno);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+			if(conn!=null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		} // finally end
 		
 	}
 

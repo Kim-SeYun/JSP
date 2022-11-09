@@ -38,16 +38,31 @@ public class MemberServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String command = request.getParameter("command");
 		
-		if(command != null && command.equals("addMember")) { // 회원가입
-			System.out.println("회원가입");
+		if(command!=null && command.equals("addMember")) { // 회원가입			
+			MemberVO vo = new MemberVO(
+					request.getParameter("id"),
+					request.getParameter("pwd"),
+					request.getParameter("name"),
+					request.getParameter("email"));
+			dao.addMember(vo);
+			response.sendRedirect("/pro08/index.html");
+		} else if(command!=null && command.equals("delMember")) {
+			System.out.println("회원삭제");
+			String inputMno = request.getParameter("mno");
+			int mno = Integer.parseInt(inputMno);
+			dao.delMember(mno);
+			response.sendRedirect("/pro08/index.html");
+			
+			
 		}
 		
 		else { // 회원목록
-			
 			RequestDispatcher rd = request.getRequestDispatcher("/memberList.jsp");
 			List<MemberVO> memberList = dao.memberList();
 			request.setAttribute("list", memberList);
 			rd.forward(request, response);
 		}
+		
 	}
+
 }

@@ -6,5 +6,6 @@ public interface MemberDao {
 	
 	List<MemberVO> memberList();
 	void addMember(MemberVO vo);
+	void delMember(int mno);
 
 }

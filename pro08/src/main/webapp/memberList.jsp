@@ -22,6 +22,7 @@
 		<th>이름</th>
 		<th>이메일</th>
 		<th>가입일</th>
+		<th>삭제</th>
 	</tr>
 	<% for(MemberVO vo : memberList) {%>
 	<tr>
@@ -31,6 +32,7 @@
 		<td><%=vo.getName()%></td>
 		<td><%=vo.getEmail()%></td>
 		<td><%=vo.getJoinDate()%></td>
+		<td><a href='/pro08/member/ex04?command=delMember&mno=<%=vo.getMno() %>'>삭제</a></td>
 	</tr>
 	<%}%>
 	
