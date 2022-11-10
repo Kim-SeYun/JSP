@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+cookie2.html
+
+</body>
+<script>
+let name = "name";
+let value = "John Smith";
+name = encodeURIComponent(name);
+value = encodeURIComponent(value);
+document.cookie=name+"="+value;
+
+name = encodeURIComponent("jsp");
+value = encodeURIComponent("jsp프로그래밍");
+document.cookie=name+"="+value;
+
+// 특정이름의 쿠키 값 가져오기
+let jspValue = getCookie("jsp");
+console.log(jspValue);
+
+function getCookie(name){
+	let matches = document.cookie.match(new RegExp(
+	"(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') 
+	+ "=([^;]*)"));
+return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+</script>
+</html>
