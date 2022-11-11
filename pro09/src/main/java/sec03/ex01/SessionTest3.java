@@ -21,6 +21,7 @@ public class SessionTest3 extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession(); // 세션 생성
+		out.print("false");
 		if(session.isNew()) {
 			out.print("세션 생성");
 		}

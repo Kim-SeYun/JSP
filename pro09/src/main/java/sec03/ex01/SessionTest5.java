@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet("/sess5")
+//@WebServlet("/sess5")
 public class SessionTest5 extends HttpServlet {
        
     
@@ -21,8 +21,11 @@ public class SessionTest5 extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		HttpSession session = request.getSession(); // 세션 생성
-		String userId = (String) session.getAttribute("user_id");
-		out.print("세션객체에 바인딩 된 데이터 : " + userId);
+		session.setAttribute("name", "aaa");
+		String encodeURL = response.encodeURL("login");
+		out.print(encodeURL + "<br>");
+		String name = (String) session.getAttribute("name");
+		out.print("세션객체에 바인딩 된 데이터 : " + name);
 	}
 
 }
