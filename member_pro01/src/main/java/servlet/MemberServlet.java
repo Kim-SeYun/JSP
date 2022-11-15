@@ -72,5 +72,6 @@ public class MemberServlet extends HttpServlet {
 			rd.forward(request, response);
 			
 		}
+		
 	}
 }
