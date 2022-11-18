@@ -45,12 +45,13 @@ public class LoginServlet extends HttpServlet {
 			// 세션 객체에 아이디 데이터 바인딩
 			HttpSession session = request.getSession();
 			session.setAttribute("isLogon", true);
-			session.setAttribute("login.id", vo.getId());
-			response.sendRedirect("/member_pro01/member");
+			session.setAttribute("loginId", vo.getId());
+			response.sendRedirect("/member_pro01/member/memberList");
 			
 		} else {
 			// 다시 로그인 요청
-			response.sendRedirect("/member_pro01/member/login.html");
+			request.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않음");
+			request.getRequestDispatcher("/mem/login.jsp").forward(request, response);
 		}
 	
 	}

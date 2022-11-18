@@ -18,6 +18,7 @@ public class AppServlet extends HttpServlet {
 	public void init() throws ServletException {
 		ServletContext ctx = getServletContext();
 		ctx.setAttribute("memberDao", MemberDaoImpl.getInstance()); // MemberDao구현체를 서블릿 컨텍스트에 바인딩
+		ctx.setAttribute("ctxPath", getServletContext().getContextPath());
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
