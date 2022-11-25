@@ -21,7 +21,6 @@ public class BoardDAO {
 			Context ctx = new InitialContext();
 			Context envCtx = (Context) ctx.lookup("java:/comp/env");
 			dataSource = (DataSource) envCtx.lookup("jdbc/oracle");
-			System.out.println(dataSource);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

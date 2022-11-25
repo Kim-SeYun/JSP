@@ -7,6 +7,7 @@
 	<div class="jumbotron">
 		<h1>자유게시판</h1>
 	</div>
+	<a href="${contextPath}/board/writeForm" class="btn btn-primary mb-2">글쓰기</a>
 	<table class="table">
 		<tr>
 			<th>번호</th>

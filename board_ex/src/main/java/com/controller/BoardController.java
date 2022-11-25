@@ -34,13 +34,14 @@ public class BoardController extends HttpServlet {
 	}
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pathInfo = request.getPathInfo();
+		String contextPath = request.getContextPath();
 		final String PRIFIX = "/WEB-INF/views/board/";
 		final String SUFFIX = ".jsp";
 		
 		RequestDispatcher rd = null;
 		String nextPage = null;
 		
-		if(pathInfo==null || pathInfo.equals("/") || pathInfo.equals("/list")) {
+		if(pathInfo==null || pathInfo.equals("/") || pathInfo.equals("/list")) { // 글목록
 			List<BoardVO> listArticles = dao.listArticles();
 			request.setAttribute("list", listArticles);
 			nextPage = "articleList";
@@ -51,9 +52,42 @@ public class BoardController extends HttpServlet {
 			BoardVO detail = dao.findArticle(bno);
 			request.setAttribute("article", detail);
 			nextPage = "detail";
+		}else if(pathInfo.equals("/writeForm")) { // 글쓰기 폼
+			nextPage = "writeForm";
+		}else if(pathInfo.equals("/modifyForm")) {
+			String paramBno = request.getParameter("bno");
+			int bno = Integer.parseInt(paramBno);
+			BoardVO findArticle = dao.findArticle(bno);
+			request.setAttribute("article", findArticle);
+			nextPage="modifyForm";
+		}
+		else if(pathInfo.equals("/addArticle")) { // 글쓰기 처리
+			BoardVO vo = BoardVO.builder()
+					.title(request.getParameter("title"))
+					.content(request.getParameter("content"))
+					.writer(request.getParameter("writer")).build();
+			dao.addArticle(vo);
+			response.sendRedirect(contextPath+"/board");
+			return;
+		} else if(pathInfo.equals("/delArticle")) { // 글삭제
+			String paramBno = request.getParameter("bno");
+			int bno = Integer.parseInt(paramBno);
+			dao.delArticle(bno);
+			response.sendRedirect(contextPath+"/board");
+			return;
+		} else if(pathInfo.equals("/modArticle")) {
+			String paramBno = request.getParameter("bno");
+			int bno = Integer.parseInt(paramBno);
+			BoardVO vo = BoardVO.builder()
+					.bno(bno)
+					.title(request.getParameter("title"))
+					.content(request.getParameter("content")).build();
+			dao.modArticle(vo);
+			response.sendRedirect(contextPath+"/board");
+			return;
 		}
 		else { 
-			System.out.println("페이지 없음");
+			request.getRequestDispatcher("/WEB-INF/views/error/_404.jsp").forward(request, response);
 			return;
 		}
 		rd = request.getRequestDispatcher(PRIFIX+nextPage+SUFFIX);
