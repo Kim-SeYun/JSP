@@ -9,7 +9,8 @@
 
 </head>
 <body>
-
+<h1>closest()</h1>
+<p>하위요소에서 상위요소로 탐색하여 가장 가까운 요소 선택</p>
 <div class="content">
 content Div
 	<div>
