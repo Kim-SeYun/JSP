@@ -26,8 +26,11 @@ $(function(){
 	
 	function myFunction(){
 		alert('get 요청 버튼클릭');
-		myForm.attr('action', 'getresult.jsp')
-			  .submit();
+		myForm.attr({
+			"action" : "getresult.jsp",
+			"method" : "get"
+		}).submit();
+			  	
 	}
 	
 	// attr(속성명, 속성값)
@@ -35,11 +38,11 @@ $(function(){
 	
 	$('.postBtn').on('click', function(){
 		alert('post 요청 버튼클릭');
-		myForm.attr('method', 'post')
-			.attr('action', 'postresult.jsp')
-			.submit();
-	})
-	
+		myForm.attr({
+			"action" : "postresult.jsp",
+			"method" : "post"
+		}).submit();
+	});
 	
 });
 </script>
