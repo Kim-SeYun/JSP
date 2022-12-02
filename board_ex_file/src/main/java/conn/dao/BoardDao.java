@@ -115,4 +115,51 @@ public class BoardDao {
 		return vo;
 	}
 
+	// 글수정
+	public void updateBoard(BoardVO vo) {
+		
+		String imageFileName = vo.getImageFileName();
+		int bno = vo.getBno();
+		String query = "update board_tbl set title=?, content=?";
+		
+		if(imageFileName!=null) { // 이미지 파일이 있을 때
+			query += ", imageFileName=? where bno=?";
+		} else { // 이미지 파일이 없을 때
+			query += " where bno=?";
+		}
+		
+		try (
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);
+		){
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContent());
+			if(imageFileName!=null) { // 이미지 파일이 있을 때
+				pstmt.setString(3, imageFileName);
+				pstmt.setInt(4, bno);
+			} else { // 이미지 파일이 없을 때
+				pstmt.setInt(3, bno);
+			}
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 삭제 처리
+	public void deletBoard(int bno) {
+		String query = "delete from board_tbl where bno=?";
+		try(
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);
+		) {
+			pstmt.setInt(1, bno);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
