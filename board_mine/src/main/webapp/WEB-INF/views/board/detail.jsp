@@ -109,7 +109,16 @@ $(function(){
 	});
 	
 	// 목록으로
-	$('.toList')
+	$('.toList').on('click', function(){
+		viewForm.attr({
+			"action" : "${contextPath}/board",
+			"method" : "get"
+		}).empty()
+		.submit();
+	});
+	
+	// 수정처리
+	
 	
 });
 </script>
