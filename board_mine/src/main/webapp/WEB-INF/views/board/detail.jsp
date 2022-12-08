@@ -41,6 +41,11 @@
 					<input type="file" name="imageFileName" class="form-control viewMode">
 					<div class="my-2">
 					<c:if test="${not empty board.imageFileName}">
+					<div style='width:80px;float: right;'>
+
+						<input type='button' class='pbtn' value='X'>
+
+					</div>
 						<input type="hidden" name="originFileName" value="${board.imageFileName}">
 						<div class="preview">
 							<img class="originImg" src="${contextPath}/fileDownload?bno=${board.bno}&imageFileName=${board.imageFileName}">
@@ -76,6 +81,7 @@
 <script>
 $(function(){
 	$('.viewMode').hide();
+	$('.pbtn').hide();
 	
 	let viewForm = $('#viewForm');
 	let titleObj = $('input[name="title"]');
@@ -92,12 +98,14 @@ $(function(){
 		$('input[name="title"], textarea[name="content"]').attr("readonly", false);
 		$('.viewMode').show();
 		$(this).closest('tr').hide();
+		$('.pbtn').show();
+		
 	});
 	
 	// 뷰모드
 	$('.backViewMode').on('click', function(){
 		$('input[name="title"],textarea[name="content"]').attr("readonly", true);
-		$('viewMode').hide();
+		$('.viewMode').hide();
 		$(this).closest('tr').prev().show();
 		$('.preview').html(originImg);
 		$('input[type="file"]').val('');
@@ -118,6 +126,46 @@ $(function(){
 	});
 	
 	// 수정처리
+	$('.modify').on('click', function(){
+		viewForm.attr({
+			"action" : "${contextPath}/board/modBoard",
+			"method" : "post"
+		}).submit();
+	});
+	
+	// 삭제처리
+	$('.remove').on('click', function(){
+		viewForm.attr({
+			"action" : "${contextPath}/board/removeBoard",
+			"method" : "post"
+		}).submit();
+	});
+	
+	$('input[type="file"]').on('change', function(){
+		if(this.files[0]){
+			let reader = new FileReader();
+			reader.onload = function(e){
+				let value = e.target.result
+				if(value.startsWith("data:image/")){
+					let imgTag = "<img src ='"+value+"'>";
+					$('.preview').html(imgTag);
+				} else{
+					alert('이미지 파일만 등록하세요');
+					$('input[name="imageFileName"]').val('');
+					$('.preview').html('');
+				}
+			}
+			reader.readAsDataURL(this.files[0]);
+		}
+	});
+	
+	$('.pbtn').on('click', function(){
+		$('input[name="imageFileName"]').val('');
+		$('.preview').html('');
+		$(this).hide();
+		
+		
+	});
 	
 	
 });
