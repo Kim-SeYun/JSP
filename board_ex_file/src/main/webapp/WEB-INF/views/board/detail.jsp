@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="../layout/header.jsp" %>  
+<script src="${contextPath}/resources/js/detail.js"></script>
   
 
 <div class="container">
@@ -45,7 +46,7 @@
 					<c:if test="${not empty board.imageFileName}">
 						<input type="hidden" name="originFileName" value="${board.imageFileName}">
 						<div class="preview">
-							<img class="originImg" src="${contextPath}/fileDownload?bno=${board.bno}&imageFileName=${board.imageFileName}">
+							<img class="originImg" src="${contextPath}/fileDownload?no=${board.bno}&imageFileName=${board.imageFileName}&path=board">
 						</div>
 					</c:if>
 					<c:if test="${empty board.imageFileName}">
@@ -74,82 +75,3 @@
 </div>
 <%@ include file="../layout/footer.jsp" %>  
 
-<script>
-$(function(){
-	$('.viewMode').hide(); // 파일폼 숨김 / 수정,취소 버튼 숨김
-	
-	let viewForm = $('#viewForm');
-	let titleObj = $('input[name="title"]');
-	let contentObj = $('textarea[name="content"]');
-	let imageFile = "${board.imageFileName}";
-	let pTag = $('.preview p').html();
-	
-	let originImg = $('.originImg').clone();
-	let titleVal = titleObj.val();
-	let contentVal = contentObj.val();
-	
-	// 수정모드
-	$('.toModForm').on('click',function(){
-		$('input[name="title"],textarea[name="content"]').attr("readonly",false);
-		$('.viewMode').show();
-		$(this).closest('tr').hide();
-	});
-	
-	// 뷰모드
-	$('.backViewMode').on('click',function(){
-		$('input[name="title"],textarea[name="content"]').attr("readonly",true);
-		$('.viewMode').hide();
-		$(this).closest('tr').prev().show();
-		$('.preview').html(originImg); // 수정전 이미지 복원
-		$('input[type="file"]').val(''); // 파일폼 초기화
-		titleObj.val(titleVal); // 수정전 제목 복원
-		contentObj.val(contentVal); // 수정전 내용 복원
-		if(imageFile=='' || imageFile==null){
-			$('.preview').html(pTag);
-		}
-	});
-	
-	// 목록으로
-	$('.toList').on('click',function(){
-		viewForm.attr({
-			"action" : "${contextPath}/board",
-			"method" : "get"
-		}).empty() // 파라미터 정보 삭제
-		.submit();
-	});
-	
-	// 수정처리
-	$('.modify').on('click', function(){
-		viewForm.attr({
-			"action" : "${contextPath}/board/modBoard",
-			"method" : "post"
-		}).submit();
-	});
-	
-	// 삭제처리
-	$('.remove').on('click', function(){
-		viewForm.attr({
-			"action" : "${contextPath}/board/removeBoard",
-			"method" : "post"
-		}).submit();
-	});
-	
-	$('input[type="file"]').on('change', function(){
-		if(this.files[0]) {
-			let reader = new FileReader(); // 파일읽기 객체
-			reader.onload = function(e){ // 파일을 읽으면 이벤트 발생
-				let value = e.target.result
-				if(value.startsWith("data:image/")) { // 이미지파일인경우
-					let imgTag = "<img src='"+value+"'>";
-					$('.preview').html(imgTag);
-				} else { // 이미지파일이 아닌경우
-					alert('이미지 파일만 등록하세요');
-					$('input[name="imageFileName"]').val('');
-					$('.preview').html('');
-				}
-			}
-			reader.readAsDataURL(this.files[0]); // 파일 읽기 메소드 호출
-		}
-	});
-});
-</script>

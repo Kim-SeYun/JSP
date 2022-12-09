@@ -3,6 +3,8 @@
     
 <%@ include file="../layout/header.jsp"%>
 
+<script src="${contextPath}/resources/js/list.js"></script>
+
 <h1>게시물 목록</h1>
 
 <div class="container my-3">
@@ -33,18 +35,3 @@
 
 <%@ include file="../layout/footer.jsp"%>
 
-<script>
-$(function(){
-	
-	let listForm = $('#listForm');
-	$('.title').on('click', function(e){
-		e.preventDefault();
-		// let bnoData = "<input type='hidden' name='bno' value='"+$(this).data('bno')+"'/>";
-		let bnoData = "<input type='hidden' name='bno' value='"+$(this).attr('href')+"'/>";
-		
-		listForm.append(bnoData)
-			.attr("action", "${contextPath}/board/detail")
-			.submit();
-	});
-});
-</script>

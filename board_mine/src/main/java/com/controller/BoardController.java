@@ -127,6 +127,17 @@ public class BoardController extends HttpServlet {
 					oldFile.delete();
 				}
 			}
+			else {
+				String originFileName = req.get("originFileName");
+				File oldFile = new File("c:/file_repo/"+bno+"/"+originFileName);
+				oldFile.delete();
+				File targetDir = new File("c:/file_repo/" +bno);
+				if(targetDir.exists()) { // 대상 폴더가 존재한다면
+					FileUtils.deleteDirectory(targetDir);
+				}
+				
+			}
+			
 			response.sendRedirect(contextPath+"/board/detail?bno="+bno);
 			return;
 		}

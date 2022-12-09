@@ -100,6 +100,7 @@ $(function(){
 		$(this).closest('tr').hide();
 		$('.pbtn').show();
 		
+		
 	});
 	
 	// 뷰모드
@@ -127,10 +128,12 @@ $(function(){
 	
 	// 수정처리
 	$('.modify').on('click', function(){
+		
 		viewForm.attr({
 			"action" : "${contextPath}/board/modBoard",
 			"method" : "post"
 		}).submit();
+		
 	});
 	
 	// 삭제처리
@@ -163,8 +166,6 @@ $(function(){
 		$('input[name="imageFileName"]').val('');
 		$('.preview').html('');
 		$(this).hide();
-		
-		
 	});
 	
 	
