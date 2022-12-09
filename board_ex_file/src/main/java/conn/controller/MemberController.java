@@ -3,14 +3,26 @@ package conn.controller;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import conn.dao.MemberDao;
+import conn.domain.MemberVO;
+import conn.service.MemberService;
+
 @WebServlet("/member/*")
 public class MemberController extends HttpServlet {
+	
+	private MemberService service;
+	
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		service = new MemberService(new MemberDao());
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
@@ -40,10 +52,15 @@ public class MemberController extends HttpServlet {
 			String pwd = (String) request.getAttribute("pwd");
 			String name = request.getParameter("name");
 			String email = request.getParameter("email");
-			System.out.println(id);
-			System.out.println(pwd);
-			System.out.println(name);
-			System.out.println(email);
+			MemberVO vo = MemberVO.builder()
+					.id(id)
+					.pwd(pwd)
+					.name(name)
+					.email(email)
+					.build();
+			service.memberJoin(vo);
+			response.sendRedirect(contextPath+"/board");
+			return;
 		}
 		
 		else {
