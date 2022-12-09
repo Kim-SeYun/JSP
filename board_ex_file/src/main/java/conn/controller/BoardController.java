@@ -120,8 +120,7 @@ public class BoardController extends HttpServlet {
 				
 				// 기존 이미지 삭제
 				if(originFileName!=null) {
-					File oldFile = new File("c:/file_repo/"+bno+"/"+originFileName);
-					oldFile.delete();
+					multiReq.deleteOriginIamge(bno, originFileName);
 				}
 				
 			} 
