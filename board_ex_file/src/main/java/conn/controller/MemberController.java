@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import conn.dao.MemberDao;
 import conn.domain.MemberVO;
@@ -61,6 +62,27 @@ public class MemberController extends HttpServlet {
 			service.memberJoin(vo);
 			response.sendRedirect(contextPath+"/board");
 			return;
+		}
+		
+		// 로그인 폼
+		else if(pathInfo.equals("/loginForm")) {
+			nextPage = "loginForm";
+		}
+		
+		// 로그인 처리
+		else if(pathInfo.equals("/login")) {
+			String id = request.getParameter("id");
+			String pwd = (String) request.getAttribute("pwd");
+			MemberVO vo = MemberVO.builder()
+					.id(id).pwd(pwd).build();
+			if(service.loginService(vo)) {
+				HttpSession sesion = request.getSession();
+				sesion.setAttribute("auth", vo.getId());
+				response.sendRedirect(contextPath+"/board");
+				return;
+			}else {
+				System.out.println("MemberController.login : 아이디 또는 비밀번호 불일치");
+			}
 		}
 		
 		else {

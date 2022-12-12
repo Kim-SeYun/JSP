@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="auth" value="${auth}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,7 @@
 <script src="${contextPath}/resources/js/common.js"></script>
 </head>
 <body>
+${auth}
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
   
   <ul class="navbar-nav">
@@ -32,7 +34,7 @@
       <a class="nav-link" href="${contextPath}/member/joinForm">회원가입</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">로그인</a>
+      <a class="nav-link" href="${contextPath}/member/loginForm">로그인</a>
     </li>
   </ul>
   

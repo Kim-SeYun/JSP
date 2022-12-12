@@ -39,7 +39,7 @@ private DataSource dataSource;
 	// 로그인 체크
 	public boolean loginCheck(MemberVO vo) {
 		boolean result = false;
-		String query = "select decode(count(*),1,'TRUE','FALSE') as result from t_member where id='lee' and pwd='1234'";
+		String query = "select decode(count(*),1,'TRUE','FALSE') as result from t_member where id=? and pwd=?";
 		
 		try (
 			Connection conn = dataSource.getConnection();

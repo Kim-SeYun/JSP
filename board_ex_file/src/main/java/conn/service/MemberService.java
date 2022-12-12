@@ -13,5 +13,9 @@ public class MemberService {
 	public void memberJoin(MemberVO vo) {
 		dao.insertMember(vo);
 	}
+	
+	public boolean loginService(MemberVO vo) {
+		return dao.loginCheck(vo);
+	}
 
 }
