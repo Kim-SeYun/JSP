@@ -24,10 +24,10 @@ public class FileDownload extends HttpServlet {
 	}
 	
 	protected void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String fileRepo = "c:/file_repo"; // 파일이 저장된 디렉토리
+		String filerepo2 = "c:/file_repo2"; // 파일이 저장된 디렉토리
 		String bno = request.getParameter("bno");
 		String fileName = request.getParameter("imageFileName");
-		File downloadFile = new File(fileRepo+"/"+bno, fileName); // 다운로드 대상 파일
+		File downloadFile = new File(filerepo2+"/"+bno, fileName); // 다운로드 대상 파일
 		
 		response.setHeader("Cache-Control", "no-cache");
 		response.addHeader("Content-disposition", "attachment; fileName=" + fileName);

@@ -60,8 +60,7 @@ public class BoardController extends HttpServlet {
 			BoardVO findArticle = dao.findArticle(bno);
 			request.setAttribute("article", findArticle);
 			nextPage="modifyForm";
-		}
-		else if(pathInfo.equals("/addArticle")) { // 글쓰기 처리
+		} else if(pathInfo.equals("/addArticle")) { // 글쓰기 처리
 			BoardVO vo = BoardVO.builder()
 					.title(request.getParameter("title"))
 					.content(request.getParameter("content"))
