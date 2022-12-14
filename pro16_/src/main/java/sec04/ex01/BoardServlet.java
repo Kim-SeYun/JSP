@@ -1,7 +1,8 @@
-package sec02.ex01;
+package sec04.ex01;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,13 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 
-@WebServlet("/member")
-public class MemberServlet extends HttpServlet {
+import com.google.gson.Gson;
 
+
+@WebServlet("/board")
+public class BoardServlet extends HttpServlet {
+	
+	private BoardDao dao;
+	
+	@Override
+	public void init() throws ServletException {
+		dao = new BoardDao();
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
 
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doHandle(request, response);
 	}
@@ -27,19 +39,10 @@ public class MemberServlet extends HttpServlet {
 		response.setContentType("application/json;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		
-		String userId = request.getParameter("userId");
-		
-		MemberDao dao = new MemberDao();
-		boolean result = dao.overlapedId(userId);
-		JSONObject idCheck = new JSONObject();
-		if(result) { // 중복된 아이디
-			idCheck.put("isAvailable", false);
-			out.print(idCheck);
-		} else { // 사용가능한 아이디
-			idCheck.put("isAvailable", true);
-			out.print(idCheck);
-		}
-		
+		List<BoardVO> list = dao.list();
+
+		String boardList = new Gson().toJson(list);
+		out.print(boardList);
 	}
 
 }
