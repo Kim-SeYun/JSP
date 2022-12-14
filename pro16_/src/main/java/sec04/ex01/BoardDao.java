@@ -50,5 +50,43 @@ public class BoardDao {
 		
 		return list;
 	}
+	
+	public BoardVO detail(int bno) {
+		String query = "select * from board_t where bno=?";
+		BoardVO vo = null;
+		try (
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);
+		){
+			pstmt.setInt(1, bno);
+			try(ResultSet rs = pstmt.executeQuery();){
+				if(rs.next()) {
+					vo = BoardVO.builder()
+							.bno(rs.getInt("bno"))
+							.title(rs.getString("title"))
+							.content(rs.getString("content"))
+							.writer(rs.getString("writer"))
+							.writeDate(rs.getDate("writeDate"))
+							.build();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	
+	public void del(int bno) {
+		String query = "DELETE FROM board_t WHERE bno=?";
+		try(
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);
+		){
+			pstmt.setInt(1, bno);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }
