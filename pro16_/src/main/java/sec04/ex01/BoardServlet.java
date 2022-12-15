@@ -53,8 +53,31 @@ public class BoardServlet extends HttpServlet {
 			String paramBno = request.getParameter("bno");
 			int bno = Integer.parseInt(paramBno);
 			dao.delete(bno);
-			System.out.println(paramBno);
 			String result = new Gson().toJson(paramBno+"번 게시물 삭제함");
+			out.print(result);
+		} else if(pathInfo.equals("/write")) {
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			String writer = request.getParameter("writer");
+			BoardVO vo = BoardVO.builder()
+					.title(title)
+					.content(content)
+					.writer(writer).build();
+			dao.write(vo);
+			
+			String result = new Gson().toJson("게시글을 등록하였습니다");
+			out.print(result);
+		} else if(pathInfo.equals("/modify")) {
+			String paramBno = request.getParameter("bno");
+			int bno = Integer.parseInt(paramBno);
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			BoardVO vo = BoardVO.builder()
+					.bno(bno)
+					.title(title)
+					.content(content).build();
+			dao.modify(vo);
+			String result = new Gson().toJson("게시글을 수정하였습니다");
 			out.print(result);
 		}
 		
