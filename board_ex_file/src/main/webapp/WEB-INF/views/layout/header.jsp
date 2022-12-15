@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="auth" value="${auth}"/>
+<c:set var="auth" value="${sessionScope.auth}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +16,7 @@
 <script src="${contextPath}/resources/js/common.js"></script>
 </head>
 <body>
-${auth}
+
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
   
   <ul class="navbar-nav">
@@ -27,15 +27,29 @@ ${auth}
       <a class="nav-link" href="#">Link 2</a>
     </li>
   </ul>
+
   
   <!-- 로그인, 로그아웃, 회원가입 -->
   <ul class="navbar-nav">
+  <c:if test="${empty auth}"> <!-- 세션값이 없을 때 -->
     <li class="nav-item">
       <a class="nav-link" href="${contextPath}/member/joinForm">회원가입</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="${contextPath}/member/loginForm">로그인</a>
     </li>
+    </c:if>
+    <c:if test="${not empty auth}"> <!-- 세션값이 있을 때 -->
+    <li class="nav-item">
+    	<span  class="nav-link">${auth.id}님 로그인 중</span>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="${contextPath}/member/myPage">나의정보보기</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="${contextPath}/member/logout">로그아웃</a>
+    </li>
+    </c:if>
   </ul>
   
 </nav>
