@@ -51,6 +51,9 @@ public class BoardServlet extends HttpServlet {
 			String detail = new Gson().toJson(vo);
 			out.print(detail);
 		} else if(pathInfo.equals("/del")) {
+			String paramBno = request.getParameter("bno");
+			int bno = Integer.parseInt(paramBno);
+			dao.del(bno);
 			
 		}
 		
