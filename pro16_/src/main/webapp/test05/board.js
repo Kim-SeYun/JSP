@@ -51,19 +51,20 @@ $(function(){
 	}); // ajax end
 	
 	$('.content').on('click', '.del', function(){
-		// alert($(this).data('bno'));
+		let bnoValue = $(this).data('bno'); // 게시물번호	
+		
 		$.ajax({
 		type : 'post',
-		url : "/pro16_/board/del",
-		success : function(del) {
-			$(this).data('bno');
-			
-			
-		}, 
-		error : function() {
-			alert('에러');
+		url : "/pro16_/board/remove",
+		data : {bno : bnoValue},
+		success : function(result){
+			alert(result);
+		},
+		error : function(){
+			alert('에러')
 		}
 	}); // ajax end
-	})
+		
+	});
 	
 }); // end

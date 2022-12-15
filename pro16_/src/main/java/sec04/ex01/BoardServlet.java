@@ -2,8 +2,7 @@ package sec04.ex01;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-
+import java.util.List;import javax.print.attribute.HashPrintJobAttributeSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,11 +49,13 @@ public class BoardServlet extends HttpServlet {
 			BoardVO vo = dao.detail(Integer.parseInt(paramBno));
 			String detail = new Gson().toJson(vo);
 			out.print(detail);
-		} else if(pathInfo.equals("/del")) {
+		} else if(pathInfo.equals("/remove")) {
 			String paramBno = request.getParameter("bno");
 			int bno = Integer.parseInt(paramBno);
-			dao.del(bno);
-			
+			dao.delete(bno);
+			System.out.println(paramBno);
+			String result = new Gson().toJson(paramBno+"번 게시물 삭제함");
+			out.print(result);
 		}
 		
 		else {

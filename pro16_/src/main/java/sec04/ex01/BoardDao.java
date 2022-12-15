@@ -76,7 +76,7 @@ public class BoardDao {
 		return vo;
 	}
 	
-	public void del(int bno) {
+	public void delete(int bno) {
 		String query = "DELETE FROM board_t WHERE bno=?";
 		try(
 			Connection conn = dataSource.getConnection();
