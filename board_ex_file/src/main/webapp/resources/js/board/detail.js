@@ -1,3 +1,4 @@
+// 게시물 관련
 $(function(){
 	$('.viewMode').hide(); // 파일폼 숨김 / 수정,취소 버튼 숨김
 	
@@ -56,5 +57,26 @@ $(function(){
 			"method" : "post"
 		}).submit();
 	});
+});
+
+// 댓글관련
+$(function(){
+	$('.reply_write').on('click', function(){
+		let writer =  $('.reply_writer').val()
+		let reply = $('.reply_content').val()
+		let bno = $('input[name="bno"]').val()
+		
+		console.log(writer)
+		console.log(reply)
+		console.log(bno)
+	});
 	
 });
+
+
+
+
+
+
+
+

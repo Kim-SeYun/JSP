@@ -3,7 +3,7 @@
     
 <%@ include file="../layout/header.jsp"%>
 
-<script src="${contextPath}/resources/js/list.js"></script>
+<script src="${contextPath}/resources/js/board/list.js"></script>
 
 <h1>게시물 목록</h1>
 

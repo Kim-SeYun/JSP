@@ -14,6 +14,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>const contextPath = "${contextPath}"</script>
 <script src="${contextPath}/resources/js/common.js"></script>
+<style>
+	li{list-style : none;}
+	ul{margin:0; padding:0;}
+</style>
 </head>
 <body>
 
@@ -21,7 +25,7 @@
   
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link" href="#">Link 1</a>
+      <a class="nav-link" href="${contextPath}/board/list">게시판</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">Link 2</a>

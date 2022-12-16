@@ -17,7 +17,8 @@ import conn.domain.AuthVO;
 
 
 @WebFilter(urlPatterns = {
-		"/board/writeForm"
+//		"/board/writeForm",
+//		"/board/detail"
 })
 public class BoardFilter extends HttpFilter implements Filter {
        
@@ -26,9 +27,14 @@ public class BoardFilter extends HttpFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse reps = (HttpServletResponse) response;
 		
+		
 		HttpSession session = req.getSession(false);
 		AuthVO auth = (AuthVO) session.getAttribute("auth");
 		if(auth==null) {
+			String requestURI = req.getRequestURI();
+			String queryString = req.getQueryString();
+			requestURI += "?"+queryString;
+			session.setAttribute("userUri", requestURI);
 			reps.sendRedirect(req.getContextPath()+"/member/loginForm");
 			return;
 		}

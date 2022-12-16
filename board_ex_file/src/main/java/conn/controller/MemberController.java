@@ -81,6 +81,12 @@ public class MemberController extends HttpServlet {
 				AuthVO authVO = new AuthVO();
 				authVO.setId(vo.getId());
 				session.setAttribute("auth", authVO);
+				String userUri = (String) session.getAttribute("userUri");
+				if(userUri!=null) {
+					session.removeAttribute("userUri");
+					response.sendRedirect(userUri);
+					return;
+				}
 				response.sendRedirect(contextPath+"/board");
 				return;
 			}else {

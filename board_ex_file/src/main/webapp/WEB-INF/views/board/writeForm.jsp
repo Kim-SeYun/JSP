@@ -16,7 +16,7 @@
 			내용 : <textarea rows="10" class="form-control" name="content"></textarea>
 		</div>
 		<div class="form-group">
-			작성자 : <input type="text" class="form-control" name="writer">
+			작성자 : <input type="text" class="form-control" name="writer" value="${auth.id}" readonly="readonly">
 		</div>
 		<div class="form-group">
 			첨부파일 : <input type="file" class="form-control" name="imageFileName">
