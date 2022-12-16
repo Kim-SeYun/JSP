@@ -59,16 +59,27 @@ $(function(){
 	});
 });
 
-// 댓글관련
+
+
+
 $(function(){
+	let bno = $('input[name="bno"]').val()
+	
+	//댓글 목록
+	replyService.list(bno);
+	// 댓글 쓰기 
 	$('.reply_write').on('click', function(){
 		let writer =  $('.reply_writer').val()
 		let reply = $('.reply_content').val()
-		let bno = $('input[name="bno"]').val()
 		
-		console.log(writer)
-		console.log(reply)
-		console.log(bno)
+		
+		let replyVO = {
+			bno : bno,
+			reply : reply,
+			writer : writer
+		}
+		replyService.write(replyVO)
+	
 	});
 	
 });

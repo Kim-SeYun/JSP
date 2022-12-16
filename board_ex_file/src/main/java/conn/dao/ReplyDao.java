@@ -1,6 +1,52 @@
 package conn.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import conn.common.ConnectionUtil;
+import conn.domain.ReplyVO;
+
 public class ReplyDao {
+
+	private DataSource dataSource;
+	
+	public ReplyDao() {
+		dataSource = ConnectionUtil.getDataSource();
+	}
+	
+	public List<ReplyVO> list(int bno) {
+		List<ReplyVO> list = new ArrayList<ReplyVO>();
+		String query = "select * from reply_tbl where bno = ?";
+		
+		try (
+			Connection conn = dataSource.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query);
+		){
+			pstmt.setInt(1, bno);
+			try(ResultSet rs = pstmt.executeQuery();){
+				while(rs.next()) {
+					ReplyVO vo = ReplyVO.builder()
+							.rno(rs.getInt("rno"))
+							.bno(rs.getInt("bno"))
+							.reply(rs.getString("reply"))
+							.writer(rs.getString("writer"))
+							.replyDate(rs.getDate("replyDate"))
+							.modifyDate(rs.getDate("modifyDate"))
+							.build();
+					list.add(vo);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 	
 	
 

@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ include file="../layout/header.jsp" %>  
+<%@ include file="../layout/header.jsp" %>
+<script src="${contextPath}/resources/js/reply/ReplyService.js"></script>   
 <script src="${contextPath}/resources/js/board/detail.js"></script> 
+
+<div class="feedback" style="display:none;">이벤트 트리거 테스트</div>
 
 <div class="container">
 	<div class="jumbotron">
@@ -105,15 +108,40 @@
 		  	<ul class="list-group list-group-flush">
 		  		<li class="list-group-item d-flex justify-content-between">
 		  			<div>첫 번째 댓글입니다.</div>
-		  			<div class="badge badge-primary">관리자</div>
+		  			<div class="badge badge-warning">관리자</div>
 		  		</li>
 		  		<li class="list-group-item d-flex justify-content-between">
 		  			<div>두 번째 댓글입니다.</div>
-		  			<div class="badge badge-primary">부매니저</div>
+		  			<div class="badge badge-warning">부매니저</div>
 		  		</li>
 			</ul>
 		  </div>
 		</div>
 	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="feedback">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">댓글 등록</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        Modal body..
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+      </div>
+
+    </div>
+  </div>
 </div>
 <%@ include file="../layout/footer.jsp" %>  
