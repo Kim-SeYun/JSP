@@ -22,5 +22,10 @@ public class MemberVO {
 	private String name;
 	private String email;
 	private Date date;
+	private MemberGrade grade;
+	
+	public enum MemberGrade {
+		ROLE_ADMIN, ROLE_MEMBER
+	}
 
 }

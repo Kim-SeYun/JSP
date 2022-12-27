@@ -1,5 +1,6 @@
 package conn.domain;
 
+import conn.domain.MemberVO.MemberGrade;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.ToString;
 public class AuthVO {
 	
 	private String id;
-	private String auth;
+	private MemberGrade grade;
 	
 
 }

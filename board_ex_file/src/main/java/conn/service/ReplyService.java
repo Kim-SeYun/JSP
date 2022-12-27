@@ -17,5 +17,12 @@ public class ReplyService {
 		return dao.list(bno);
 	}
 	
-
+	public void writer(ReplyVO vo) {
+		dao.insert(vo);
+	}
+	
+	public void remove(ReplyVO vo) {
+		dao.remove(vo);
+	}
+	
 }

@@ -11,12 +11,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import conn.domain.ReplyVO;
 import conn.service.ReplyService;
-
 
 @WebServlet("/reply/*")
 public class ReplyController extends HttpServlet {
@@ -45,26 +45,45 @@ public class ReplyController extends HttpServlet {
 			String paramBno = request.getParameter("bno");
 			int bno = Integer.parseInt(paramBno);
 			List<ReplyVO> replyList = service.list(bno);
-			
-			
-			out.print(gson.toJson(replyList)); 
+			out.print(gson.toJson(replyList));
 			
 		} else if(pathInfo.equals("/write")) {
 			String paramBno = request.getParameter("bno");
+			
+			long currentTime = System.currentTimeMillis();
+			HttpSession session = request.getSession(false);
+			if(session.getAttribute("lastWriting")!=null) { // 마지막에 글을 쓴 시간이 있다면
+				long lastWriting = (long) session.getAttribute("lastWriting");
+				if(currentTime-lastWriting < 10000) {
+					out.print(gson.toJson("도배하지마세요"));
+					return;
+				}
+			}
+			// 마지막에 글을 쓴 시간이 없다면
+			session.setAttribute("lastWriting", currentTime);
 			
 			ReplyVO vo = ReplyVO.builder()
 					.bno(Integer.parseInt(paramBno))
 					.reply(request.getParameter("reply"))
 					.writer(request.getParameter("writer")).build();
 			
-			System.out.println(vo);
+			service.writer(vo);
 			String result = gson.toJson("댓글 등록 성공");
-			
 			out.print(result);
 			
+		} else if(pathInfo.equals("/remove")) {
+			String paramBno = request.getParameter("bno");
+			String paramRno = request.getParameter("rno");
+			ReplyVO vo = ReplyVO.builder()
+					.bno(Integer.parseInt(paramBno))
+					.rno(Integer.parseInt(paramRno))
+					.build();
+			
+			service.remove(vo);
+			String result = gson.toJson("댓글 삭제 성공");
+			out.print(result);
 		}
 	}
 
-	
 
 }

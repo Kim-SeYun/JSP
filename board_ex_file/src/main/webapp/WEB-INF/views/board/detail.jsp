@@ -2,10 +2,8 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="../layout/header.jsp" %>
-<script src="${contextPath}/resources/js/reply/ReplyService.js"></script>   
+<script src="${contextPath}/resources/js/reply/ReplyService.js"></script>  
 <script src="${contextPath}/resources/js/board/detail.js"></script> 
-
-<div class="feedback" style="display:none;">이벤트 트리거 테스트</div>
 
 <div class="container">
 	<div class="jumbotron">
@@ -31,7 +29,7 @@
 			<tr>
 				<th>제목</th>
 				<td colspan="3">
-					<input type="text" name="title" class="form-control" value="${board.title}" readonly="readonly">
+				<input type="text" name="title" class="form-control" value="${board.title}" readonly="readonly">
 				</td>
 			</tr>
 			<tr>
@@ -61,7 +59,7 @@
 			</tr>
 			<tr>
 				<td colspan="4" class="text-center">
-					<c:if test="${auth.id eq board.writer}">
+					<c:if test="${auth.id eq board.writer or auth.grade eq 'ROLE_ADMIN'}">
 						<button type="button" class="btn btn-info toModForm">수정하기</button>
 						<button type="button" class="btn btn-secondary remove">삭제</button>
 					</c:if>
@@ -69,7 +67,7 @@
 				</td>
 			</tr>
 			<tr class="viewMode">
-				<c:if test="${auth.id eq board.writer}">
+				<c:if test="${auth.id eq board.writer or auth.grade eq 'ROLE_ADMIN'}">
 					<td colspan="4" class="text-center">
 						<button type="button" class="btn btn-primary modify">수정</button>
 						<button type="button" class="btn btn-secondary backViewMode">취소</button>
@@ -84,8 +82,8 @@
 			<tr>
 				<th colspan="2">
 					<ul class="d-flex justify-content-between">
-						<div>댓글을 작성해주세요</div>
-						<div>작성자 : <input type="text" class="reply_writer"></div>
+						<li>댓글을 작성해주세요</li>
+						<li class="form-inline">작성자 : <input type="text" class="reply_writer form-control ml-2" value="${auth.id}" readonly="readonly"></li>
 					</ul>
 				</th>
 				</th>
@@ -97,30 +95,21 @@
 				</td>
 			</tr>
 			<tr class="text-right">
-				<td colspan="2"><button class="btn btn-info text-white reply_write">댓글등록</button></td>
+				<td colspan="2"><button class="btn btn-light reply_write">댓글등록</button></td>
 			</tr>
 		</table>
 	</div>
 	<div class="replyList">
 		<div class="card">
-		  <div class="card-header bg-secondary text-white">댓글목록</div>
+		  <div class="card-header bg-dark text-white">댓글목록</div>
 		  <div class="card-body">
 		  	<ul class="list-group list-group-flush">
-		  		<li class="list-group-item d-flex justify-content-between">
-		  			<div>첫 번째 댓글입니다.</div>
-		  			<div class="badge badge-warning">관리자</div>
-		  		</li>
-		  		<li class="list-group-item d-flex justify-content-between">
-		  			<div>두 번째 댓글입니다.</div>
-		  			<div class="badge badge-warning">부매니저</div>
-		  		</li>
 			</ul>
 		  </div>
 		</div>
 	</div>
 </div>
 
-<!-- The Modal -->
 <div class="modal fade" id="feedback">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -138,7 +127,7 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">확인</button>
       </div>
 
     </div>

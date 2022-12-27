@@ -1,9 +1,9 @@
-package conn.controller;
+package conn.common;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -15,14 +15,12 @@ import javax.servlet.http.HttpSession;
 
 import conn.domain.AuthVO;
 
-
 @WebFilter(urlPatterns = {
-//		"/board/writeForm",
-//		"/board/detail"
+		//"/board/writeForm",
+		//"/board/detail"
 })
 public class BoardFilter extends HttpFilter implements Filter {
-       
-  
+
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse reps = (HttpServletResponse) response;
@@ -33,14 +31,13 @@ public class BoardFilter extends HttpFilter implements Filter {
 		if(auth==null) {
 			String requestURI = req.getRequestURI();
 			String queryString = req.getQueryString();
-			requestURI += "?"+queryString;
-			session.setAttribute("userUri", requestURI);
+			requestURI += "?" + queryString;
+			session.setAttribute("userURI", requestURI);
 			reps.sendRedirect(req.getContextPath()+"/member/loginForm");
 			return;
 		}
 		chain.doFilter(request, response);
 	}
 
-	
 
 }

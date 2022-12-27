@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import conn.dao.MemberDao;
 import conn.domain.AuthVO;
 import conn.domain.MemberVO;
+import conn.domain.MemberVO.MemberGrade;
 import conn.service.MemberService;
 
 @WebServlet("/member/*")
@@ -65,31 +66,39 @@ public class MemberController extends HttpServlet {
 			return;
 		}
 		
-		// 로그인 폼
+		// 로그인폼
 		else if(pathInfo.equals("/loginForm")) {
 			nextPage = "loginForm";
 		}
 		
-		// 로그인 처리
+		// 로그인처리
 		else if(pathInfo.equals("/login")) {
 			String id = request.getParameter("id");
 			String pwd = (String) request.getAttribute("pwd");
 			MemberVO vo = MemberVO.builder()
-					.id(id).pwd(pwd).build();
+					.id(id)
+					.pwd(pwd)
+					.build();
+			
 			if(service.loginService(vo)) {
 				HttpSession session = request.getSession();
+				
+				// 회원 권한 설정
+				MemberGrade grade = service.getMemberGrade(vo.getId()); // 등급조회
 				AuthVO authVO = new AuthVO();
-				authVO.setId(vo.getId());
-				session.setAttribute("auth", authVO);
-				String userUri = (String) session.getAttribute("userUri");
-				if(userUri!=null) {
-					session.removeAttribute("userUri");
-					response.sendRedirect(userUri);
+				authVO.setId(vo.getId()); // 아이디
+				authVO.setGrade(grade); // 등급
+				session.setAttribute("auth", authVO); // 세션 데이터 바인딩
+				
+				String userURI = (String) session.getAttribute("userURI");
+				if(userURI!=null) {
+					session.removeAttribute("userURI");
+					response.sendRedirect(userURI);
 					return;
 				}
 				response.sendRedirect(contextPath+"/board");
 				return;
-			}else {
+			} else {
 				System.out.println("MemberController.login : 아이디 또는 비밀번호 불일치");
 			}
 		}

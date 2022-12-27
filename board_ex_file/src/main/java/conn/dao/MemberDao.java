@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import javax.sql.DataSource;
 
 import conn.common.ConnectionUtil;
-import conn.domain.BoardVO;
 import conn.domain.MemberVO;
+import conn.domain.MemberVO.MemberGrade;
 
 public class MemberDao {
 	
@@ -58,5 +58,25 @@ private DataSource dataSource;
 		
 		return result;
 	}
+	
+	// 회원등급 조회
+		public MemberGrade findMemberGradeById(String id) {
+			MemberGrade grade = null;
+			String query = "select grade from t_member where id=?";
+			try (
+				Connection conn = dataSource.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(query);	
+			){
+				pstmt.setString(1, id);
+				try(ResultSet rs = pstmt.executeQuery();) {
+					if(rs.next()) grade = MemberGrade.valueOf(rs.getString("grade"));
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return grade;
+		}
+
 
 }

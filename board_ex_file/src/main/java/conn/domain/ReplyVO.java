@@ -15,6 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Builder
+
 public class ReplyVO {
 	private int rno;
 	private int bno;
@@ -22,5 +23,5 @@ public class ReplyVO {
 	private String writer;
 	private Date replyDate;
 	private Date modifyDate;
-
+	
 }

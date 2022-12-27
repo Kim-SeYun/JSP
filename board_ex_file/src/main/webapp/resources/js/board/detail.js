@@ -13,14 +13,14 @@ $(function(){
 	let contentVal = contentObj.val();
 	
 	// 수정모드
-	$('.toModForm').on('click',function(){
+	$('.toModForm').on('click', function(){
 		$('input[name="title"],textarea[name="content"]').attr("readonly",false);
 		$('.viewMode').show();
 		$(this).closest('tr').hide();
 	});
 	
 	// 뷰모드
-	$('.backViewMode').on('click',function(){
+	$('.backViewMode').on('click', function(){
 		$('input[name="title"],textarea[name="content"]').attr("readonly",true);
 		$('.viewMode').hide();
 		$(this).closest('tr').prev().show();
@@ -28,13 +28,13 @@ $(function(){
 		$('input[type="file"]').val(''); // 파일폼 초기화
 		titleObj.val(titleVal); // 수정전 제목 복원
 		contentObj.val(contentVal); // 수정전 내용 복원
-		if(imageFile=='' || imageFile==null){
+		if(imageFile==''||imageFile==null) {
 			$('.preview').html(pTag);
 		}
 	});
 	
 	// 목록으로
-	$('.toList').on('click',function(){
+	$('.toList').on('click', function(){
 		viewForm.attr({
 			"action" : `${contextPath}/board`,
 			"method" : "get"
@@ -42,7 +42,7 @@ $(function(){
 		.submit();
 	});
 	
-	// 수정처리
+	// 수정 처리
 	$('.modify').on('click', function(){
 		viewForm.attr({
 			"action" : `${contextPath}/board/modBoard`,
@@ -50,7 +50,7 @@ $(function(){
 		}).submit();
 	});
 	
-	// 삭제처리
+	// 삭제 처리
 	$('.remove').on('click', function(){
 		viewForm.attr({
 			"action" : `${contextPath}/board/removeBoard`,
@@ -59,35 +59,39 @@ $(function(){
 	});
 });
 
-
-
-
 $(function(){
-	let bno = $('input[name="bno"]').val()
+	let bno = $('input[name="bno"]').val();
 	
-	//댓글 목록
+	// 댓글 목록
 	replyService.list(bno);
-	// 댓글 쓰기 
-	$('.reply_write').on('click', function(){
-		let writer =  $('.reply_writer').val()
-		let reply = $('.reply_content').val()
 		
+	// 댓글 쓰기 버튼 이벤트
+	$('.reply_write').on('click', function(){
+		let writer = $('.reply_writer').val()
+		let reply = $('.reply_content').val()
 		
 		let replyVO = {
 			bno : bno,
 			reply : reply,
 			writer : writer
 		}
-		replyService.write(replyVO)
-	
+		replyService.write(replyVO);
 	});
 	
+	// 댓글 수정 버튼 이벤트
+	$('.replyList').on('click','.reply_modBtn', function(){
+		let rno = $(this).closest('div').data('rno');
+		alert('수정입니다 ' + rno + '번')
+	});
+	
+	// 댓글 삭제 버튼 이벤트
+	$('.replyList').on('click','.reply_delBtn', function() {
+		let rno = $(this).closest('div').data('rno');
+		
+		let replyVO = {
+			bno : bno,
+			rno : rno
+		}
+		replyService.remove(replyVO);
+	});
 });
-
-
-
-
-
-
-
-
